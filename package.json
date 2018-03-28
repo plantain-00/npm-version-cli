@@ -41,7 +41,8 @@
   "dependencies": {
     "inquirer": "5",
     "minimist": "1.2.0",
-    "semver": "5"
+    "semver": "5",
+    "tslib": "1"
   },
   "bin": {
     "npm-version-cli": "bin/npm-version-cli"
