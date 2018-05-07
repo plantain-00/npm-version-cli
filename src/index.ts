@@ -6,11 +6,11 @@ import * as packageJson from '../package.json'
 
 let suppressError = false
 
-function showToolVersion () {
+function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
 }
 
-function exec (command: string) {
+function exec(command: string) {
   return new Promise<string>((resolve, reject) => {
     console.log(`${command}...`)
     const subProcess = childProcess.exec(command, (error, stdout, stderr) => {
@@ -25,7 +25,7 @@ function exec (command: string) {
   })
 }
 
-async function executeCommandLine () {
+async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true })
 
   const showVersion = argv.v || argv.version

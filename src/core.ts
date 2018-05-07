@@ -3,7 +3,7 @@ import * as semver from 'semver'
 import * as path from 'path'
 import * as fs from 'fs'
 
-function writeFile (filename: string, data: string) {
+function writeFile(filename: string, data: string) {
   return new Promise<void>((resolve, reject) => {
     fs.writeFile(filename, data, error => {
       if (error) {
@@ -15,7 +15,7 @@ function writeFile (filename: string, data: string) {
   })
 }
 
-export async function askVersion () {
+export async function askVersion() {
   let identifierAnswer = await inquirer.prompt<{ identifier: string }>({
     type: 'list',
     name: 'identifier',
