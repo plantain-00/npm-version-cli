@@ -39,7 +39,7 @@ async function executeCommandLine() {
   const version = await askVersion()
   await exec(`git add package.json`)
   await exec(`git commit -m "${version}"`)
-  await exec(`git tag v${version}`)
+  await exec(`git tag -a v${version} -m 'v${version}'`)
 }
 
 executeCommandLine().then(() => {
