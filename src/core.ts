@@ -16,7 +16,7 @@ function writeFile(filename: string, data: string) {
 }
 
 export async function askVersion() {
-  let identifierAnswer = await inquirer.prompt<{ identifier: string }>({
+  const identifierAnswer = await inquirer.prompt<{ identifier: string }>({
     type: 'list',
     name: 'identifier',
     message: 'Select a new identifier:',
