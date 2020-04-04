@@ -2,14 +2,19 @@ import * as inquirer from 'inquirer'
 import * as semver from 'semver'
 import * as path from 'path'
 import * as fs from 'fs'
+import * as util from 'util'
+import * as xmlJs from 'xml-js'
 
-function writeFile(filename: string, data: string) {
-  return new Promise<void>((resolve, reject) => {
-    fs.writeFile(filename, data, error => {
-      if (error) {
-        reject(error)
+const writeFileAsync = util.promisify(fs.writeFile)
+const readFileAsync = util.promisify(fs.readFile)
+
+function statAsync(path: string) {
+  return new Promise<fs.Stats | undefined>((resolve) => {
+    fs.stat(path, (err, stats) => {
+      if (err) {
+        resolve(undefined)
       } else {
-        resolve()
+        resolve(stats)
       }
     })
   })
@@ -86,6 +91,18 @@ export async function askVersion() {
     })
   }
   packageJsonData.version = newVersionAnswer.newVersion
-  await writeFile(packageJsonPath, JSON.stringify(packageJsonData, null, 2) + '\n')
+  await writeFileAsync(packageJsonPath, JSON.stringify(packageJsonData, null, 2) + '\n')
+
+  const csxsPath = path.resolve(process.cwd(), 'CSXS', 'manifest.xml')
+  const stats = await statAsync(csxsPath)
+  if (stats && stats.isFile()) {
+    const xml = await readFileAsync(csxsPath, 'utf8')
+    const obj = xmlJs.xml2js(xml)
+    if (obj.elements?.[0]?.attributes?.ExtensionBundleVersion) {
+      obj.elements[0].attributes.ExtensionBundleVersion = newVersionAnswer.newVersion
+    }
+    await writeFileAsync(csxsPath, xmlJs.js2xml(obj, { spaces: 2 }) + '\n')
+  }
+
   return newVersionAnswer.newVersion
 }

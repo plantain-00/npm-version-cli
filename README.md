@@ -14,6 +14,11 @@ better npm version with identifier
 
 `yarn global add npm-version-cli`
 
+## features
+
++ npm version: package.json
++ adobe plugin version: CSXS/manifest.xml
+
 ## usage
 
 run `npm-version-cli`

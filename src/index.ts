@@ -4,7 +4,7 @@ import { askVersion } from './core'
 
 import * as packageJson from '../package.json'
 
-let suppressError = false
+let suppressError: boolean | undefined = false
 
 function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
@@ -13,7 +13,7 @@ function showToolVersion() {
 function exec(command: string) {
   return new Promise<string>((resolve, reject) => {
     console.log(`${command}...`)
-    const subProcess = childProcess.exec(command, (error, stdout, stderr) => {
+    const subProcess = childProcess.exec(command, (error, stdout) => {
       if (error) {
         reject(error)
       } else {
@@ -30,7 +30,11 @@ function exec(command: string) {
 }
 
 async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true })
+  const argv = minimist(process.argv.slice(2), { '--': true }) as {
+    version?: string
+    v?: string
+    suppressError?: boolean
+  }
 
   const showVersion = argv.v || argv.version
   if (showVersion) {

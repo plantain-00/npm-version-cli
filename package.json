@@ -20,7 +20,7 @@
     "url": "https://github.com/plantain-00/npm-version-cli/issues"
   },
   "typeCoverage": {
-    "atLeast": 95
+    "atLeast": 96.27
   },
   "homepage": "https://github.com/plantain-00/npm-version-cli#readme",
   "devDependencies": {
@@ -48,7 +48,8 @@
     "inquirer": "7",
     "minimist": "1.2.5",
     "semver": "7",
-    "tslib": "1"
+    "tslib": "1",
+    "xml-js": "1"
   },
   "bin": {
     "npm-version-cli": "bin/npm-version-cli"
