@@ -8,7 +8,7 @@ import * as xmlJs from 'xml-js'
 const writeFileAsync = util.promisify(fs.writeFile)
 const readFileAsync = util.promisify(fs.readFile)
 
-function statAsync(path: string) {
+export function statAsync(path: string) {
   return new Promise<fs.Stats | undefined>((resolve) => {
     fs.stat(path, (err, stats) => {
       if (err) {
@@ -93,7 +93,6 @@ export async function askVersion() {
   packageJsonData.version = newVersionAnswer.newVersion
   await writeFileAsync(packageJsonPath, JSON.stringify(packageJsonData, null, 2) + '\n')
 
-  const csxsPath = path.resolve(process.cwd(), 'CSXS', 'manifest.xml')
   const stats = await statAsync(csxsPath)
   if (stats && stats.isFile()) {
     const xml = await readFileAsync(csxsPath, 'utf8')
@@ -106,3 +105,5 @@ export async function askVersion() {
 
   return newVersionAnswer.newVersion
 }
+
+export const csxsPath = path.resolve(process.cwd(), 'CSXS', 'manifest.xml')

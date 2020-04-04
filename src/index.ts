@@ -1,6 +1,6 @@
 import minimist from 'minimist'
 import * as childProcess from 'child_process'
-import { askVersion } from './core'
+import { askVersion, statAsync, csxsPath } from './core'
 
 import * as packageJson from '../package.json'
 
@@ -46,6 +46,12 @@ async function executeCommandLine() {
 
   const version = await askVersion()
   await exec(`git add package.json`)
+
+  const stats = await statAsync(csxsPath)
+  if (stats && stats.isFile()) {
+    await exec(`git add ${csxsPath}`)
+  }
+
   await exec(`git commit -m "${version}"`)
   await exec(`git tag -a v${version} -m 'v${version}'`)
 }
