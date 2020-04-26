@@ -94,7 +94,7 @@ export async function askVersion() {
   await writeFileAsync(packageJsonPath, JSON.stringify(packageJsonData, null, 2) + '\n')
 
   const stats = await statAsync(csxsPath)
-  if (stats && stats.isFile()) {
+  if (stats && stats.isFile() && !semver.prerelease(newVersionAnswer.newVersion)) {
     const xml = await readFileAsync(csxsPath, 'utf8')
     const obj = xmlJs.xml2js(xml)
     if (obj.elements?.[0]?.attributes?.ExtensionBundleVersion) {

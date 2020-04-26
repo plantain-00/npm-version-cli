@@ -1,5 +1,6 @@
 import minimist from 'minimist'
 import * as childProcess from 'child_process'
+import * as semver from 'semver'
 import { askVersion, statAsync, csxsPath } from './core'
 
 import * as packageJson from '../package.json'
@@ -48,7 +49,7 @@ async function executeCommandLine() {
   await exec(`git add package.json`)
 
   const stats = await statAsync(csxsPath)
-  if (stats && stats.isFile()) {
+  if (stats && stats.isFile() && !semver.prerelease(version)) {
     await exec(`git add ${csxsPath}`)
   }
 
