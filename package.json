@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "inquirer": "7",
-    "minimist": "1.2.5",
+    "minimist": "1",
     "semver": "7",
     "tslib": "1",
     "xml-js": "1"
