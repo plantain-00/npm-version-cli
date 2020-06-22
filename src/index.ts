@@ -11,6 +11,16 @@ function showToolVersion() {
   console.log(`Version: ${packageJson.version}`)
 }
 
+function showHelp() {
+  console.log(`Version ${packageJson.version}
+Syntax:   npm-version-cli [options]
+Examples: npm-version-cli
+Options:
+ -h, --help                                         Print this message.
+ -v, --version                                      Print the version
+`)
+}
+
 function exec(command: string) {
   return new Promise<string>((resolve, reject) => {
     console.log(`${command}...`)
@@ -35,12 +45,19 @@ async function executeCommandLine() {
     version?: string
     v?: string
     suppressError?: boolean
+    h?: unknown
+    help?: unknown
   }
 
   const showVersion = argv.v || argv.version
   if (showVersion) {
     showToolVersion()
     return
+  }
+
+  if (argv.h || argv.help) {
+    showHelp()
+    process.exit(0)
   }
 
   suppressError = argv.suppressError
@@ -59,7 +76,7 @@ async function executeCommandLine() {
 
 executeCommandLine().then(() => {
   console.log(`npm-version-cli success.`)
-}, error => {
+}, (error: Error) => {
   if (error instanceof Error) {
     console.log(error.message)
   } else {

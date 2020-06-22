@@ -23,6 +23,15 @@ better npm version with identifier
 
 run `npm-version-cli`
 
+## options
+
+key | description
+--- | ---
+-h,--help | Print this message.
+-v,--version | Print the version
+
+## API
+
 ```ts
 import { askVersion } from 'npm-version-cli'
 

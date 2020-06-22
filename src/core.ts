@@ -96,7 +96,13 @@ export async function askVersion() {
   const stats = await statAsync(csxsPath)
   if (stats && stats.isFile() && !semver.prerelease(newVersionAnswer.newVersion)) {
     const xml = await readFileAsync(csxsPath, 'utf8')
-    const obj = xmlJs.xml2js(xml)
+    const obj = xmlJs.xml2js(xml) as unknown as {
+      elements?: Array<{
+        attributes?: {
+          ExtensionBundleVersion?: string
+        }
+      }>
+    }
     if (obj.elements?.[0]?.attributes?.ExtensionBundleVersion) {
       obj.elements[0].attributes.ExtensionBundleVersion = newVersionAnswer.newVersion
     }
