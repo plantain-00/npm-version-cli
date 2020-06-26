@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/plantain-00/npm-version-cli#readme",
   "devDependencies": {
-    "@commitlint/cli": "9.0.1",
-    "@commitlint/config-conventional": "9.0.1",
     "@types/inquirer": "6.5.0",
     "@types/minimist": "1.2.0",
     "@types/node": "14.0.14",
