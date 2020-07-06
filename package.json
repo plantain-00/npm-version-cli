@@ -46,7 +46,7 @@
     "inquirer": "7",
     "minimist": "1",
     "semver": "7",
-    "tslib": "2",
+    "tslib": "1 || 2",
     "xml-js": "1"
   },
   "bin": {
