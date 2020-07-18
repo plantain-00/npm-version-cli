@@ -5,7 +5,7 @@ import * as fs from 'fs'
 import * as util from 'util'
 import * as xmlJs from 'xml-js'
 
-const writeFileAsync = util.promisify(fs.writeFile)
+export const writeFileAsync = util.promisify(fs.writeFile)
 const readFileAsync = util.promisify(fs.readFile)
 
 export function statAsync(path: string) {

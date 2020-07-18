@@ -1,7 +1,8 @@
 import minimist from 'minimist'
 import * as childProcess from 'child_process'
 import * as semver from 'semver'
-import { askVersion, statAsync, csxsPath } from './core'
+import { gitCommitToChangeLog } from 'git-commits-to-changelog'
+import { askVersion, statAsync, csxsPath, writeFileAsync } from './core'
 
 import * as packageJson from '../package.json'
 
@@ -15,9 +16,11 @@ function showHelp() {
   console.log(`Version ${packageJson.version}
 Syntax:   npm-version-cli [options]
 Examples: npm-version-cli
+          npm-version-cli --changelog
 Options:
  -h, --help                                         Print this message.
  -v, --version                                      Print the version
+ --changelog                                        Generate CHANGELOG.md
 `)
 }
 
@@ -47,6 +50,7 @@ async function executeCommandLine() {
     suppressError?: boolean
     h?: unknown
     help?: unknown
+    changelog?: unknown
   }
 
   const showVersion = argv.v || argv.version
@@ -68,6 +72,12 @@ async function executeCommandLine() {
   const stats = await statAsync(csxsPath)
   if (stats && stats.isFile() && !semver.prerelease(version)) {
     await exec(`git add ${csxsPath}`)
+  }
+
+  if (argv.changelog) {
+    const changelog = await gitCommitToChangeLog(version)
+    await writeFileAsync('CHANGELOG.md', changelog)
+    await exec(`git add CHANGELOG.md`)
   }
 
   await exec(`git commit -m "${version}"`)

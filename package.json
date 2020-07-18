@@ -43,6 +43,7 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
+    "git-commits-to-changelog": "1",
     "inquirer": "7",
     "minimist": "1",
     "semver": "7",

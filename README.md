@@ -30,6 +30,7 @@ key | description
 --- | ---
 -h,--help | Print this message.
 -v,--version | Print the version
+--changelog | Generate CHANGELOG.md
 
 ## API
 

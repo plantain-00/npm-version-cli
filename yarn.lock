@@ -591,6 +591,15 @@ get-stdin@~5.0.1:
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
   integrity sha1-Ei4WFZHiH/TFJTAwVpPyDmOTo5g=
 
+git-commits-to-changelog@1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/git-commits-to-changelog/-/git-commits-to-changelog-1.2.1.tgz#8901028df7c646295359d66e28fc0be2997c6bfe"
+  integrity sha512-k1MOUHDdWATrrE2f+1S/wnFCYN94EAqTiTUxU4gsqVLXCWJfqBXHPo3qau0KLcRlUujXrLrkjaSkrUiTo5QQgw==
+  dependencies:
+    minimist "1"
+    semver "7"
+    tslib "1 || 2"
+
 glob-parent@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
