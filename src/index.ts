@@ -1,8 +1,7 @@
 import minimist from 'minimist'
-import * as childProcess from 'child_process'
 import * as semver from 'semver'
 import { gitCommitToChangeLog } from 'git-commits-to-changelog'
-import { askVersion, statAsync, csxsPath, writeFileAsync } from './core'
+import { askVersion, statAsync, csxsPath, writeFileAsync, exec } from './core'
 
 import * as packageJson from '../package.json'
 
@@ -22,25 +21,6 @@ Options:
  -v, --version                                      Print the version
  --changelog                                        Generate CHANGELOG.md
 `)
-}
-
-function exec(command: string) {
-  return new Promise<string>((resolve, reject) => {
-    console.log(`${command}...`)
-    const subProcess = childProcess.exec(command, (error, stdout) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(stdout)
-      }
-    })
-    if (subProcess.stdout) {
-      subProcess.stdout.pipe(process.stdout)
-    }
-    if (subProcess.stderr) {
-      subProcess.stderr.pipe(process.stderr)
-    }
-  })
 }
 
 async function executeCommandLine() {

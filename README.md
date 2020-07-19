@@ -19,6 +19,8 @@ better npm version with identifier
 
 + npm version: package.json
 + adobe plugin version: CSXS/manifest.xml
++ changgelog generation
++ yarn workspaces
 
 ## usage
 
