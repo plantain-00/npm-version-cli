@@ -46,7 +46,7 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const version = await askVersion()
+  const { version } = await askVersion()
   await exec(`git add package.json`)
 
   const stats = await statAsync(csxsPath)

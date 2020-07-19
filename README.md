@@ -42,3 +42,13 @@ import { askVersion } from 'npm-version-cli'
 await askVersion()
 
 ```
+
+## changelogs
+
+```js
+// v2
+const { version } = await askVersion()
+
+// v1
+const version = await askVersion()
+```

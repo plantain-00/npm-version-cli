@@ -163,7 +163,10 @@ export async function askVersion() {
     await writeFileAsync(csxsPath, xmlJs.js2xml(obj, { spaces: 2 }) + '\n')
   }
 
-  return newVersionAnswer.newVersion
+  return {
+    version: newVersionAnswer.newVersion,
+    effectedWorkspaces,
+  }
 }
 
 export const csxsPath = path.resolve(process.cwd(), 'CSXS', 'manifest.xml')
