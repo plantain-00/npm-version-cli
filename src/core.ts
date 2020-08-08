@@ -135,6 +135,12 @@ export async function askVersion(): Promise<{ version: string, effectedWorkspace
     const packages = new Set<string>()
     for (const workspaces of effectedWorkspaces) {
       for (const workspace of workspaces) {
+        packages.add(workspace.name)
+      }
+    }
+
+    for (const workspaces of effectedWorkspaces) {
+      for (const workspace of workspaces) {
         const workspacePath = path.resolve(process.cwd(), workspace.path, 'package.json')
         const packageJson: PackageJson = JSON.parse((await readFileAsync(workspacePath)).toString())
         packageJson.version = newVersionAnswer.newVersion
@@ -147,7 +153,6 @@ export async function askVersion(): Promise<{ version: string, effectedWorkspace
         }
         await writeFileAsync(workspacePath, JSON.stringify(packageJson, null, 2) + '\n')
         await exec(`git add ${workspace.path}/package.json`)
-        packages.add(workspace.name)
       }
     }
   }
