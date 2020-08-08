@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.1](https://github.com/plantain-00/npm-version-cli/compare/v2.1.0...v2.1.1) (2020-08-09)
+  
+* fix: fix dependencies version not updated in workspace mode ([7775df4](https://github.com/plantain-00/npm-version-cli/commit/7775df45f5cf69151805b44f5fd0bba72eaa53ff))
+* build: improve release script ([e61f186](https://github.com/plantain-00/npm-version-cli/commit/e61f186bc64f75ccb8f205b59cf06dfd6e23cc07))
+
 ## [2.1.0](https://github.com/plantain-00/npm-version-cli/compare/v2.0.0...v2.1.0) (2020-08-08)
   
 * feat: if new version is normal and old version is prerelease, the workspace is effected ([9871255](https://github.com/plantain-00/npm-version-cli/commit/987125596e88b154e5a3fb08ebcf47f8559d306e))
