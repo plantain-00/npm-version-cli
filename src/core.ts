@@ -12,7 +12,7 @@ export const writeFileAsync = util.promisify(fs.writeFile)
 const readFileAsync = util.promisify(fs.readFile)
 const globAsync = util.promisify(glob)
 
-export function statAsync(path: string) {
+export function statAsync(path: string): Promise<fs.Stats | undefined> {
   return new Promise<fs.Stats | undefined>((resolve) => {
     fs.stat(path, (err, stats) => {
       if (err) {
@@ -36,7 +36,7 @@ function execAsync(script: string) {
   })
 }
 
-export async function askVersion() {
+export async function askVersion(): Promise<{ version: string, effectedWorkspaces?: Workspace[][] }> {
   const identifierAnswer = await inquirer.prompt<{ identifier: string }>({
     type: 'list',
     name: 'identifier',
@@ -54,16 +54,13 @@ export async function askVersion() {
   const packageJsonData: PackageJson = require(packageJsonPath)
 
   let version: string
-  let effectedWorkspaces: Workspace[][] | undefined
+  let lastVersionCommit: { version: string, hash: string } | undefined
   if (!packageJsonData.version) {
-    const lastVersionCommit = getLastestVersionCommit()
-    const workspaces = await readWorkspaceDependenciesAsync()
+    lastVersionCommit = getLastestVersionCommit()
     if (!lastVersionCommit) {
       version = '0.0.0'
-      effectedWorkspaces = [workspaces]
     } else {
       version = lastVersionCommit.version
-      effectedWorkspaces = await getEffectedWorkspaces(lastVersionCommit.hash, workspaces)
     }
   } else {
     version = packageJsonData.version
@@ -123,10 +120,18 @@ export async function askVersion() {
     })
   }
 
+  let effectedWorkspaces: Workspace[][] | undefined
   if (packageJsonData.version) {
     packageJsonData.version = newVersionAnswer.newVersion
     await writeFileAsync(packageJsonPath, JSON.stringify(packageJsonData, null, 2) + '\n')
-  } else if (effectedWorkspaces) {
+  } else {
+    const allWorkspaces = await readWorkspaceDependenciesAsync()
+    if (!lastVersionCommit) {
+      effectedWorkspaces = [allWorkspaces]
+    } else {
+      effectedWorkspaces = await getEffectedWorkspaces(lastVersionCommit.hash, allWorkspaces, newVersionAnswer.newVersion)
+    }
+
     const packages = new Set<string>()
     for (const workspaces of effectedWorkspaces) {
       for (const workspace of workspaces) {
@@ -181,7 +186,7 @@ interface PackageJson {
 /**
  * @public
  */
-export async function readWorkspaceDependenciesAsync() {
+export async function readWorkspaceDependenciesAsync(): Promise<Workspace[]> {
   const rootPackageJson: PackageJson = JSON.parse((await readFileAsync(path.resolve(process.cwd(), 'package.json'))).toString())
   const workspacesArray = await Promise.all(rootPackageJson.workspaces.map((w) => globAsync(w)))
   const flattenedWorkspaces = new Set<string>()
@@ -210,7 +215,8 @@ export async function readWorkspaceDependenciesAsync() {
     return {
       name: p.name,
       path: flattenedWorkspacesArray[i],
-      dependencies
+      dependencies,
+      version: p.version,
     }
   })
 }
@@ -219,6 +225,7 @@ interface Workspace {
   name: string;
   path: string;
   dependencies?: string[]
+  version: string
 }
 
 function getLastestVersionCommit() {
@@ -233,14 +240,18 @@ function getLastestVersionCommit() {
   return undefined
 }
 
-async function getEffectedWorkspaces(hash: string, workspaces: Workspace[]) {
+async function getEffectedWorkspaces(hash: string, workspaces: Workspace[], newVersion: string) {
   const out = await execAsync(`git diff --name-only ${hash} head`)
   const files = out.trim().split('\n')
 
   let remainWorkspaces: typeof workspaces = []
   let currentWorkspaces: typeof workspaces = []
+  const newVersionIsPrereleaseVersion = semver.prerelease(newVersion)
   for (const workspace of workspaces) {
-    if (files.some((f) => f.startsWith(workspace.path))) {
+    // if new version is normal release and old version is prerelease, the workspace is effected
+    if (!newVersionIsPrereleaseVersion && semver.prerelease(workspace.version)) {
+      currentWorkspaces.push(workspace)
+    } else if (files.some((f) => f.startsWith(workspace.path))) {
       currentWorkspaces.push(workspace)
     } else if (workspace.dependencies) {
       remainWorkspaces.push(workspace)
@@ -272,7 +283,7 @@ async function getEffectedWorkspaces(hash: string, workspaces: Workspace[]) {
   return effectedWorkspaces
 }
 
-export function exec(command: string) {
+export function exec(command: string): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     console.log(`${command}...`)
     const subProcess = childProcess.exec(command, (error, stdout) => {
