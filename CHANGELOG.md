@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.1.0](https://github.com/plantain-00/npm-version-cli/compare/v2.0.0...v2.1.0) (2020-08-08)
+  
+* feat: if new version is normal and old version is prerelease, the workspace is effected ([9871255](https://github.com/plantain-00/npm-version-cli/commit/987125596e88b154e5a3fb08ebcf47f8559d306e))
+* chore: update dependencies ([657f170](https://github.com/plantain-00/npm-version-cli/commit/657f1702d3747657a3f3f85e2fd7311dcea12f83)) ([63428d2](https://github.com/plantain-00/npm-version-cli/commit/63428d28b00ccf47d243b7df1835fd5cda75b93f)) ([54ad574](https://github.com/plantain-00/npm-version-cli/commit/54ad574dbbec27eef4f50548963e23c04fbba610))
+* chore: add changelog ([b7509d5](https://github.com/plantain-00/npm-version-cli/commit/b7509d56f5ddc3833731ebb73102bc0a2f9d94c1))
+
 ## [2.0.0](https://github.com/plantain-00/npm-version-cli/compare/v1.4.0...v2.0.0) (2020-07-19)
   
 * feat: expose effected workspaces ([217f452](https://github.com/plantain-00/npm-version-cli/commit/217f452b2f2f7eb2c1a165af9866851fcf1a05e8))
@@ -9,7 +15,6 @@
 * feat: support yarn workspaces ([8f2a827](https://github.com/plantain-00/npm-version-cli/commit/8f2a827b57c64e2550f6321bb6b41aa696f4b777))
 * feat: support changelog generation ([dd25569](https://github.com/plantain-00/npm-version-cli/commit/dd255697f2faebc9c6eaeae2326349ce99f9cd7d))
 * chore: update dependencies ([1ca8a0f](https://github.com/plantain-00/npm-version-cli/commit/1ca8a0f0af1028e0122d68783e20c7d6774689d0)) ([e0c4964](https://github.com/plantain-00/npm-version-cli/commit/e0c4964c7df1defded452d68692584b38e6dc7fc))
-* chore(deps): bump lodash from 4.17.15 to 4.17.19 ([d90e929](https://github.com/plantain-00/npm-version-cli/commit/d90e929588363112bd7f3df006e6a7d3d0140d4a))
 * docs: add github ci badge ([7034f0f](https://github.com/plantain-00/npm-version-cli/commit/7034f0fa7493ae93c2d030a420f78d8e1472b22c))
 * chore: remove tsconfig.eslint.json ([9ca90d8](https://github.com/plantain-00/npm-version-cli/commit/9ca90d865ff9ab8f632310eaafef0cd6ca34ec3a))
 
