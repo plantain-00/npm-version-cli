@@ -56,5 +56,8 @@
   },
   "bin": {
     "npm-version-cli": "bin/npm-version-cli"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
