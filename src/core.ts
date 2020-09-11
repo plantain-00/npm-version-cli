@@ -200,7 +200,16 @@ export async function readWorkspaceDependenciesAsync(): Promise<Workspace[]> {
       flattenedWorkspaces.add(w)
     })
   })
-  const flattenedWorkspacesArray = Array.from(flattenedWorkspaces)
+  const flattenedWorkspacesArray: string[] = []
+  for (const workspace of flattenedWorkspaces) {
+    const stats = await statAsync(path.resolve(workspace))
+    if (stats && stats.isDirectory()) {
+      const packageJsonStats = await statAsync(path.resolve(workspace, 'package.json'))
+      if (packageJsonStats && packageJsonStats.isFile()) {
+        flattenedWorkspacesArray.push(workspace)
+      }
+    }
+  }
   const packageJsons: PackageJson[] = []
   const packageNames = new Set<string>()
   for (const workspace of flattenedWorkspacesArray) {
