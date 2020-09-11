@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.2](https://github.com/plantain-00/npm-version-cli/compare/v2.1.1...v2.1.2) (2020-09-11)
+  
+* fix: exclude invalid workspace ([bfbe138](https://github.com/plantain-00/npm-version-cli/commit/bfbe1382806b2e98114087f9ea570aec95cf175a))
+* chore: update dependencies ([7d501e0](https://github.com/plantain-00/npm-version-cli/commit/7d501e0fafd8b3857fada0edbfb39e812d600af7)) ([e06d441](https://github.com/plantain-00/npm-version-cli/commit/e06d4416f6171bc5b2b78c9407962587d52e727b)) ([aed225e](https://github.com/plantain-00/npm-version-cli/commit/aed225ea3c544dc633b1bd432381cec5395f6b37)) ([3374049](https://github.com/plantain-00/npm-version-cli/commit/33740496ee9888153b2fe956dde44fe6699a3865))
+* fix: add missing parserOptions ([5a81b00](https://github.com/plantain-00/npm-version-cli/commit/5a81b002e965fc457f5fe9eb7329b3bf28ef1c60))
+* build: add missing publishConfig ([40bda25](https://github.com/plantain-00/npm-version-cli/commit/40bda25fea03c128fcbf2245405fa49c16216560))
+
 ## [2.1.1](https://github.com/plantain-00/npm-version-cli/compare/v2.1.0...v2.1.1) (2020-08-09)
   
 * fix: fix dependencies version not updated in workspace mode ([7775df4](https://github.com/plantain-00/npm-version-cli/commit/7775df45f5cf69151805b44f5fd0bba72eaa53ff))
