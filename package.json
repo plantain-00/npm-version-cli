@@ -1,6 +1,6 @@
 {
   "name": "npm-version-cli",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "better npm version with identifier",
   "main": "dist/core.js",
   "types": "dist/core.d.ts",

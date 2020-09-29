@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.2.0](https://github.com/plantain-00/npm-version-cli/compare/v2.1.2...v2.2.0) (2020-09-29)
+  
+* feat: support --only-changed-packages and --effected-packages ([25531b6](https://github.com/plantain-00/npm-version-cli/commit/25531b6c8628d9b5d517944b25cb780d2b6e3ebd))
+* chore: update dependencies ([73479ce](https://github.com/plantain-00/npm-version-cli/commit/73479ce2be187817bfbb7c75d2b845b4eae53888)) ([42c3ed8](https://github.com/plantain-00/npm-version-cli/commit/42c3ed83be25e37797919833aa19d566c4ce0f40)) ([8d9505b](https://github.com/plantain-00/npm-version-cli/commit/8d9505b50e12f60e5e2dfe51104556f24cf3ac86))
+
 ## [2.1.2](https://github.com/plantain-00/npm-version-cli/compare/v2.1.1...v2.1.2) (2020-09-11)
   
 * fix: exclude invalid workspace ([bfbe138](https://github.com/plantain-00/npm-version-cli/commit/bfbe1382806b2e98114087f9ea570aec95cf175a))
