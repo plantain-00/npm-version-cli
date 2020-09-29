@@ -1,7 +1,7 @@
 import minimist from 'minimist'
 import * as semver from 'semver'
 import { gitCommitToChangeLog } from 'git-commits-to-changelog'
-import { askVersion, statAsync, csxsPath, writeFileAsync, exec } from './core'
+import { askVersion, statAsync, csxsPath, writeFileAsync, exec, Options } from './core'
 
 import * as packageJson from '../package.json'
 
@@ -16,10 +16,14 @@ function showHelp() {
 Syntax:   npm-version-cli [options]
 Examples: npm-version-cli
           npm-version-cli --changelog
+          npm-version-cli --only-changed-packages
+          npm-version-cli --effected-packages foo --effected-packages bar
 Options:
  -h, --help                                         Print this message.
  -v, --version                                      Print the version
  --changelog                                        Generate CHANGELOG.md
+ --only-changed-packages                            Only changed packages will bump.
+ --effected-packages                                The packages will be considered as effected packages.
 `)
 }
 
@@ -31,6 +35,8 @@ async function executeCommandLine() {
     h?: unknown
     help?: unknown
     changelog?: unknown
+    'only-changed-packages'?: unknown
+    'effected-packages'?: unknown
   }
 
   const showVersion = argv.v || argv.version
@@ -46,7 +52,17 @@ async function executeCommandLine() {
 
   suppressError = argv.suppressError
 
-  const { version } = await askVersion()
+  const effectedPackages: string[] = []
+  if (typeof argv["effected-packages"] === 'string') {
+    effectedPackages.push(argv["effected-packages"])
+  } else if (Array.isArray(argv["effected-packages"])) {
+    effectedPackages.push(...argv["effected-packages"])
+  }
+  const options: Partial<Options> = {
+    onlyChangedPackages: !!argv['only-changed-packages'],
+    effectedPackages,
+  }
+  const { version } = await askVersion(options)
   await exec(`git add package.json`)
 
   const stats = await statAsync(csxsPath)

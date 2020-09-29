@@ -33,6 +33,8 @@ key | description
 -h,--help | Print this message.
 -v,--version | Print the version
 --changelog | Generate CHANGELOG.md
+--only-changed-packages | Only changed packages will bump.
+--effected-packages | The packages will be considered as effected packages.
 
 ## API
 
@@ -40,7 +42,6 @@ key | description
 import { askVersion } from 'npm-version-cli'
 
 await askVersion()
-
 ```
 
 ## changelogs

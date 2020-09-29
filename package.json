@@ -21,7 +21,7 @@
     "url": "https://github.com/plantain-00/npm-version-cli/issues"
   },
   "typeCoverage": {
-    "atLeast": 98.13
+    "atLeast": 98.3
   },
   "homepage": "https://github.com/plantain-00/npm-version-cli#readme",
   "devDependencies": {

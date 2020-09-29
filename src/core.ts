@@ -36,7 +36,12 @@ function execAsync(script: string) {
   })
 }
 
-export async function askVersion(): Promise<{ version: string, effectedWorkspaces?: Workspace[][] }> {
+export interface Options {
+  onlyChangedPackages: boolean
+  effectedPackages: string[]
+}
+
+export async function askVersion(options?: Partial<Options>): Promise<{ version: string, effectedWorkspaces?: Workspace[][] }> {
   const identifierAnswer = await inquirer.prompt<{ identifier: string }>({
     type: 'list',
     name: 'identifier',
@@ -129,7 +134,7 @@ export async function askVersion(): Promise<{ version: string, effectedWorkspace
     if (!lastVersionCommit) {
       effectedWorkspaces = [allWorkspaces]
     } else {
-      effectedWorkspaces = await getEffectedWorkspaces(lastVersionCommit.hash, allWorkspaces, newVersionAnswer.newVersion)
+      effectedWorkspaces = await getEffectedWorkspaces(lastVersionCommit.hash, allWorkspaces, newVersionAnswer.newVersion, options)
     }
 
     const packages = new Set<string>()
@@ -254,24 +259,31 @@ function getLastestVersionCommit() {
   return undefined
 }
 
-async function getEffectedWorkspaces(hash: string, workspaces: Workspace[], newVersion: string) {
+async function getEffectedWorkspaces(hash: string, workspaces: Workspace[], newVersion: string, options?: Partial<Options>) {
   const out = await execAsync(`git diff --name-only ${hash} head`)
   const files = out.trim().split('\n')
 
   let remainWorkspaces: typeof workspaces = []
   let currentWorkspaces: typeof workspaces = []
   const newVersionIsPrereleaseVersion = semver.prerelease(newVersion)
+  const effectedPackages = options?.effectedPackages ?? []
   for (const workspace of workspaces) {
     // if new version is normal release and old version is prerelease, the workspace is effected
     if (!newVersionIsPrereleaseVersion && semver.prerelease(workspace.version)) {
       currentWorkspaces.push(workspace)
     } else if (files.some((f) => f.startsWith(workspace.path))) {
       currentWorkspaces.push(workspace)
+    } else if (effectedPackages.includes(workspace.name)) {
+      currentWorkspaces.push(workspace)
     } else if (workspace.dependencies) {
       remainWorkspaces.push(workspace)
     }
   }
   const effectedWorkspaces = [currentWorkspaces]
+
+  if (options?.onlyChangedPackages) {
+    return effectedWorkspaces
+  }
 
   while (remainWorkspaces.length > 0) {
     const current = currentWorkspaces.map((c) => c.name)
