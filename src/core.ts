@@ -71,13 +71,13 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
     version = packageJsonData.version
   }
 
-  const patchVersion = semver.inc(version, 'patch')!
-  const minorVersion = semver.inc(version, 'minor')!
-  const majorVersion = semver.inc(version, 'major')!
-  const prepatchVersion = semver.inc(version, 'prepatch', true, identifier)!
-  const preminorVersion = semver.inc(version, 'preminor', true, identifier)!
-  const premajorVersion = semver.inc(version, 'premajor', true, identifier)!
-  const prereleaseVersion = semver.inc(version, 'prerelease', true, identifier)!
+  const patchVersion = semver.inc(version, 'patch')
+  const minorVersion = semver.inc(version, 'minor')
+  const majorVersion = semver.inc(version, 'major')
+  const prepatchVersion = semver.inc(version, 'prepatch', true, identifier)
+  const preminorVersion = semver.inc(version, 'preminor', true, identifier)
+  const premajorVersion = semver.inc(version, 'premajor', true, identifier)
+  const prereleaseVersion = semver.inc(version, 'prerelease', true, identifier)
   const customVersionChoice = 'Custom'
   let newVersionAnswer = await inquirer.prompt<{ newVersion: string }>({
     type: 'list',
@@ -121,7 +121,7 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
       name: 'newVersion',
       message: 'Enter a custom version:',
       filter: (input: string) => semver.valid(input)!,
-      validate: input => input !== null || 'Must be a valid semver version'
+      validate: (input: string) => input !== null || 'Must be a valid semver version'
     })
   }
 
@@ -143,6 +143,26 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
         packages.add(workspace.name)
       }
     }
+
+    const effectedPackagesAnswer = await inquirer.prompt<{ effectedPackages: string[] }>({
+      type: 'checkbox',
+      name: 'effectedPackages',
+      message: 'Confirm effected packages:',
+      choices: allWorkspaces.map((w) => ({
+        name: w.name,
+        value: w.name,
+        checked: packages.has(w.name)
+      })),
+      validate: (anwser: string[]) => {
+        if (anwser.length > 0) {
+          return true
+        }
+        return 'At least one effected package to continue.'
+      }
+    })
+    effectedWorkspaces = [
+      allWorkspaces.filter((w) => effectedPackagesAnswer.effectedPackages.includes(w.name))
+    ]
 
     for (const workspaces of effectedWorkspaces) {
       for (const workspace of workspaces) {
