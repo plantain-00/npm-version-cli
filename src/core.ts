@@ -149,7 +149,7 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
       name: 'effectedPackages',
       message: 'Confirm effected packages:',
       choices: allWorkspaces.map((w) => ({
-        name: w.name,
+        name: `${w.name} ${w.version} -> ${newVersionAnswer.newVersion}`,
         value: w.name,
         checked: packages.has(w.name)
       })),
