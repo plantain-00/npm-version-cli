@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.3.1](https://github.com/plantain-00/npm-version-cli/compare/v2.3.0...v2.3.1) (2020-10-01)
+  
+* feat: show version when choosing effected packages ([2962ac2](https://github.com/plantain-00/npm-version-cli/commit/2962ac20049de487dd5b429066e9b77e9c158a38))
+
 ## [2.3.0](https://github.com/plantain-00/npm-version-cli/compare/v2.2.0...v2.3.0) (2020-10-01)
   
 * feat: confirm effected packages ([43f0b9f](https://github.com/plantain-00/npm-version-cli/commit/43f0b9f4b7a0fe33f272450f16e3e4d25034086b))
