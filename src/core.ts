@@ -5,12 +5,11 @@ import * as fs from 'fs'
 import * as util from 'util'
 import * as xmlJs from 'xml-js'
 import { iterateCommits } from 'git-commits-to-changelog'
-import glob from 'glob'
 import * as childProcess from 'child_process'
+import { readWorkspaceDependenciesAsync as collect } from 'package-dependency-collect'
 
 export const writeFileAsync = util.promisify(fs.writeFile)
 const readFileAsync = util.promisify(fs.readFile)
-const globAsync = util.promisify(glob)
 
 export function statAsync(path: string): Promise<fs.Stats | undefined> {
   return new Promise<fs.Stats | undefined>((resolve) => {
@@ -217,47 +216,7 @@ interface PackageJson {
  * @public
  */
 export async function readWorkspaceDependenciesAsync(): Promise<Workspace[]> {
-  const rootPackageJson: PackageJson = JSON.parse((await readFileAsync(path.resolve(process.cwd(), 'package.json'))).toString())
-  const workspacesArray = await Promise.all(rootPackageJson.workspaces.map((w) => globAsync(w)))
-  const flattenedWorkspaces = new Set<string>()
-  workspacesArray.forEach((workspace) => {
-    workspace.forEach((w) => {
-      flattenedWorkspaces.add(w)
-    })
-  })
-  const flattenedWorkspacesArray: string[] = []
-  for (const workspace of flattenedWorkspaces) {
-    const stats = await statAsync(path.resolve(workspace))
-    if (stats && stats.isDirectory()) {
-      const packageJsonStats = await statAsync(path.resolve(workspace, 'package.json'))
-      if (packageJsonStats && packageJsonStats.isFile()) {
-        flattenedWorkspacesArray.push(workspace)
-      }
-    }
-  }
-  const packageJsons: PackageJson[] = []
-  const packageNames = new Set<string>()
-  for (const workspace of flattenedWorkspacesArray) {
-    const packageJson: PackageJson = JSON.parse((await readFileAsync(path.resolve(workspace, 'package.json'))).toString())
-    packageJsons.push(packageJson)
-    packageNames.add(packageJson.name)
-  }
-
-  return packageJsons.map((p, i) => {
-    let dependencies: string[] | undefined
-    if (p.dependencies) {
-      const workpaceDependencies = Object.keys(p.dependencies).filter((d) => packageNames.has(d))
-      if (workpaceDependencies.length > 0) {
-        dependencies = workpaceDependencies
-      }
-    }
-    return {
-      name: p.name,
-      path: flattenedWorkspacesArray[i],
-      dependencies,
-      version: p.version,
-    }
-  })
+  return collect({ excludeNodeModules: true })
 }
 
 interface Workspace {
