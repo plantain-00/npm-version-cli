@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.3.2](https://github.com/plantain-00/npm-version-cli/compare/v2.3.1...v2.3.2) (2020-11-11)
+  
+* fix: version bump bug ([18cb520](https://github.com/plantain-00/npm-version-cli/commit/18cb520542caeddccc3cd9ff8bac7eed68cf3dc0))
+* chore: update dependencies ([af5883b](https://github.com/plantain-00/npm-version-cli/commit/af5883b6d6b6e90ff2591c0d2c6798f022fc9e36)) ([58ecfbb](https://github.com/plantain-00/npm-version-cli/commit/58ecfbb9410f7e78d30f146af9a93db1aff24bcc)) ([5d6a77b](https://github.com/plantain-00/npm-version-cli/commit/5d6a77bf2994c3f0939ea32b6ffef30b1cbb68ad)) ([cd637fb](https://github.com/plantain-00/npm-version-cli/commit/cd637fbdf83127a4a6532d702411bae01cbaebee)) ([74dbd29](https://github.com/plantain-00/npm-version-cli/commit/74dbd29b1130ac8054e99b68133995fc74fff944)) ([c2fe76c](https://github.com/plantain-00/npm-version-cli/commit/c2fe76ce3c8a9aaba82db926abf2c8cead539ea7))
+* refactor: reuse readWorkspaceDependenciesAsync ([16ab3f9](https://github.com/plantain-00/npm-version-cli/commit/16ab3f9e91abc577ff9907999bdfd953d4ce15b4))
+
 ## [2.3.1](https://github.com/plantain-00/npm-version-cli/compare/v2.3.0...v2.3.1) (2020-10-01)
   
 * feat: show version when choosing effected packages ([2962ac2](https://github.com/plantain-00/npm-version-cli/commit/2962ac20049de487dd5b429066e9b77e9c158a38))
