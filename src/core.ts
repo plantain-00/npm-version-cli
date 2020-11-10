@@ -162,6 +162,12 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
     effectedWorkspaces = [
       allWorkspaces.filter((w) => effectedPackagesAnswer.effectedPackages.includes(w.name))
     ]
+    const effectedPackages = new Set<string>()
+    for (const workspaces of effectedWorkspaces) {
+      for (const workspace of workspaces) {
+        effectedPackages.add(workspace.name)
+      }
+    }
 
     for (const workspaces of effectedWorkspaces) {
       for (const workspace of workspaces) {
@@ -170,7 +176,7 @@ export async function askVersion(options?: Partial<Options>): Promise<{ version:
         packageJson.version = newVersionAnswer.newVersion
         if (packageJson.dependencies) {
           for (const dependency in packageJson.dependencies) {
-            if (packages.has(dependency)) {
+            if (effectedPackages.has(dependency)) {
               packageJson.dependencies[dependency] = '^' + newVersionAnswer.newVersion
             }
           }
