@@ -45,7 +45,7 @@
     "typescript": "4.1.3"
   },
   "dependencies": {
-    "git-commits-to-changelog": "1",
+    "git-commits-to-changelog": "^1.4",
     "inquirer": "7",
     "minimist": "1",
     "package-dependency-collect": "1",

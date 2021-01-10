@@ -16,12 +16,14 @@ function showHelp() {
 Syntax:   npm-version-cli [options]
 Examples: npm-version-cli
           npm-version-cli --changelog
+          npm-version-cli --append-changelog
           npm-version-cli --only-changed-packages
           npm-version-cli --effected-packages foo --effected-packages bar
 Options:
  -h, --help                                         Print this message.
  -v, --version                                      Print the version
  --changelog                                        Generate CHANGELOG.md
+ --append-changelog                                 Append CHANGELOG.md
  --only-changed-packages                            Only changed packages will bump.
  --effected-packages                                The packages will be considered as effected packages.
 `)
@@ -35,6 +37,7 @@ async function executeCommandLine() {
     h?: unknown
     help?: unknown
     changelog?: unknown
+    'append-changelog'?: boolean
     'only-changed-packages'?: unknown
     'effected-packages'?: unknown
   }
@@ -70,8 +73,8 @@ async function executeCommandLine() {
     await exec(`git add ${csxsPath}`)
   }
 
-  if (argv.changelog) {
-    const changelog = await gitCommitToChangeLog(version)
+  if (argv.changelog || argv['append-changelog']) {
+    const changelog = await gitCommitToChangeLog(version, argv['append-changelog'])
     await writeFileAsync('CHANGELOG.md', changelog)
     await exec(`git add CHANGELOG.md`)
   }
