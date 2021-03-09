@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.5.0](https://github.com/plantain-00/npm-version-cli/compare/v2.4.0...v2.5.0) (2021-03-09)
+  
+* chore: update dependencies ([274ed89](https://github.com/plantain-00/npm-version-cli/commit/274ed89dc42d5c14a705078b3a72fcc3f515fe41)) ([3c3a2f5](https://github.com/plantain-00/npm-version-cli/commit/3c3a2f545734c2be07c1db05c541d4fc005754fb)) ([ea0a7e0](https://github.com/plantain-00/npm-version-cli/commit/ea0a7e0ec91959852b2175dddbf3f7687180c84e)) ([018c81b](https://github.com/plantain-00/npm-version-cli/commit/018c81ba77b13015852702b7c186ddae0ee6beec)) ([c4cbb53](https://github.com/plantain-00/npm-version-cli/commit/c4cbb5338862b70ad09df0717fce2642fbb0772d)) ([0f0eb94](https://github.com/plantain-00/npm-version-cli/commit/0f0eb942b25c24e0dc34995152d82361023c6141)) ([8267935](https://github.com/plantain-00/npm-version-cli/commit/8267935a9fca9d4354420e43190fd846f965edb7)) ([7c887d7](https://github.com/plantain-00/npm-version-cli/commit/7c887d7e6da3ae1d11bd13461be74e83c6c18d23))
+
 ## [2.4.0](https://github.com/plantain-00/npm-version-cli/compare/v2.3.2...v2.4.0) (2021-01-10)
   
 * feat: support append changelog ([975e756](https://github.com/plantain-00/npm-version-cli/commit/975e756181873c0b4e04c6f188f72ea2f7ea7452))
